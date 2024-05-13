@@ -14,8 +14,10 @@ public class SimpleWebServer {
                 Socket clientSocket = serverSocket.accept(); // 等待客户端连接
 
                 // 处理客户端请求
-                Thread thread = new Thread(new HttpRequestHandler(clientSocket));
-                thread.start();
+                if (clientSocket != null && clientSocket.isConnected()) {
+                    Thread thread = new Thread(new HttpRequestHandler(clientSocket));
+                    thread.start();
+                }
             }
 
         } catch (IOException e) {

@@ -18,12 +18,20 @@ class HttpRequestHandler implements Runnable {
 
             // 读取客户端请求
             String requestLine = in.readLine();
-            System.out.println("Request received: " + requestLine);
+            System.out.println(Thread.currentThread().getName() + "Request received: " + requestLine);
+
+//            String[] requestParts = requestLine.split(" ");
+//            String method = requestParts[0];
+//            String path = requestParts[1];
 
             // 解析请求
-            String[] requestParts = requestLine.split(" ");
-            String method = requestParts[0];
-            String path = requestParts[1];
+            String method = "";
+            String path = "";
+            if (requestLine != null) {
+                String[] requestParts = requestLine.split(" ");
+                method = requestParts[0];
+                path = requestParts[1];
+            }
 
 
             // 处理GET请求
@@ -49,7 +57,7 @@ class HttpRequestHandler implements Runnable {
                     out.println("HTTP/1.1 404 Not Found");
                     out.println("Content-Type: text/html");
                     out.println();
-                    out.println("<h1>404 Not Found</h1>");
+                    out.println("<h1>404 Not Found---the resource is null!</h1>");
                 }
             }
 
