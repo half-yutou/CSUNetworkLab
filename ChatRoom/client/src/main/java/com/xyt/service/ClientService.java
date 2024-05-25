@@ -3,6 +3,7 @@ package com.xyt.service;
 import com.xyt.common.Message;
 import com.xyt.common.MessageType;
 import com.xyt.common.User;
+import com.xyt.ui.ChatUI;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -21,9 +22,6 @@ public class ClientService {
 
     /**
      * 向服务器发送登录请求,并返回是否登录成功
-     * @param userId
-     * @param passwd
-     * @return
      */
     public boolean login(String userId, String passwd) {
         user.setUserId(userId);
@@ -38,7 +36,8 @@ public class ClientService {
             Message message = (Message) in.readObject();
 
             if (MessageType.LOGIN_SUCCESS.equals(message.getType())) {
-                ConnectThread connectThread = new ConnectThread(socket);
+                ChatUI chatUI = ConnectThreadManager.user2ChatUI.get(userId);
+                ConnectThread connectThread = new ConnectThread(socket, chatUI);
                 new Thread(connectThread).start();
 
                 ConnectThreadManager.addThread(userId, connectThread);

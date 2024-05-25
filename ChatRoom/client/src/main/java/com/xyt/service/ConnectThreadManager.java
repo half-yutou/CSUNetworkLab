@@ -1,8 +1,12 @@
 package com.xyt.service;
 
+import com.xyt.ui.ChatUI;
+
 import java.util.HashMap;
+import java.util.concurrent.CopyOnWriteArrayList;
 
 public class ConnectThreadManager {
+    public static HashMap<String, ChatUI> user2ChatUI = new HashMap<>();
     //key: userId
     public static HashMap<String, ConnectThread> map = new HashMap<>();
 
